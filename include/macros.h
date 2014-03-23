@@ -49,6 +49,8 @@
 #define CREATE_BOARD(f1, f2, f3, t, r)                                         \
   SET_C6(SET_C5(SET_C4(SET_C3(SET_C2((bitset)0, f1), f2), f3), t), r)
 
+#define CREATE_HAND(c0, c1) SET_C1(SET_C0((combination)0, c0), c1)
+
 #define LOOKUP_HAND(HR, c)                                                     \
   HR[HR[HR[HR[HR[HR[HR[53 + GET_C0(c)] + GET_C1(c)] + GET_C2(c)] +             \
               GET_C3(c)] +                                                     \

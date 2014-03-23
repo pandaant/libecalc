@@ -62,7 +62,7 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
   return results;
 }
 
-handlist ECalc::hand_combinations(const bitset &deadcards) {
+handlist ECalc::random_handlist(const bitset &deadcards) {
   int c0, c1;
   handlist hands;
   for (c0 = 0; c0 < 51; ++c0) {
@@ -72,6 +72,10 @@ handlist ECalc::hand_combinations(const bitset &deadcards) {
     }
   }
   return hands;
+}
+
+handlist ECalc::single_handlist(card c0, card c1) {
+  return handlist({CREATE_HAND(c0, c1)});
 }
 
 card ECalc::draw_card(bitset &deck) {

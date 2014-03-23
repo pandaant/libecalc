@@ -12,11 +12,11 @@ ECALC_OBJ_FILES = $(addprefix obj/,$(notdir $(ECALC_CPP_FILES:.cpp=.o)))
 
 # variables for tests
 TEST_CPPFLAGS=-m64 -Ofast -Wall -pedantic -std=c++11 -g
-TEST_INCLUDES=-I ./include
+TEST_INCLUDES=-I ./include -I ../../dep/UnitTest++/src -I ../poker/include
 TEST_OUTFILE=test/ecalc_tests
 TEST_CPP_FILES = $(wildcard test/src/*.cpp)
 TEST_OBJ_FILES = $(addprefix test/obj/,$(notdir $(TEST_CPP_FILES:.cpp=.o)))
-TEST_LIBS= -L ./ -lecalc
+TEST_LIBS= -L ./ -lecalc -L ../../dep/UnitTest++ -lUnitTest++ -L ../poker/dist/Release -lpoker
 
 
 $(ECALC_LIBFILE): $(ECALC_OBJ_FILES)

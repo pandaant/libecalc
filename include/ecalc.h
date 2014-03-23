@@ -22,7 +22,8 @@ public:
   result_collection evaluate(const handlist_collection &handlists,
                              const cards &boardcards, const cards &deadcards,
                              const int &samples);
-  static handlist hand_combinations(const bitset &deadcards);
+  static handlist single_handlist(card c0, card c1);
+  static handlist random_handlist(const bitset &deadcards);
 
 private:
   result_collection evaluate(const handlist_collection &handlists,
