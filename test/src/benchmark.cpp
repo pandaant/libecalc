@@ -14,7 +14,7 @@ SUITE(ECalcBenchmarks) {
   struct Setup {
     ECalc calc;
 
-    Setup() : calc(*(new Handranks("../../bin/data/handranks.dat"))) {}
+    Setup() : calc(*(new Handranks("../../../bin/data/handranks.dat"))) {}
     ~Setup() {}
   };
 
@@ -28,54 +28,59 @@ SUITE(ECalcBenchmarks) {
   }
 
   TEST_FIXTURE(Setup, BenchmarkAhAsVsKhKs) {
-    Hand ahas("AhAs");
-    Hand khks("KhKs");
-    handlist_collection hands(
-        {ECalc::single_handlist(ahas.get_lowcard().get_card(),
-                                ahas.get_highcard().get_card()),
-         ECalc::single_handlist(khks.get_lowcard().get_card(),
-                                khks.get_highcard().get_card())});
     cards board, dead;
+    handlist_collection hands({ECalc::single_handlist(Hand("AhAs")),
+                               ECalc::single_handlist(Hand("KhKs"))});
 
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate(hands, board, dead, 10000);
     auto end = std::chrono::system_clock::now();
 
-    print_benchmark_result("AhAs v. KhKs", (end-start), 10000);
-
     CHECK_CLOSE(0.82637, res[0].pwin_tie(), 0.01);
+    print_benchmark_result("AhAs v. KhKs", (end - start), 10000);
   }
 
   TEST_FIXTURE(Setup, BenchmarkAhAsVsRandom) {
-    Hand ahas("AhAs");
-    handlist_collection hands(
-        {ECalc::single_handlist(ahas.get_lowcard().get_card(),
-                                ahas.get_highcard().get_card()),
-         ECalc::random_handlist(CREATE_HAND(ahas.get_lowcard().get_card(),
-                                            ahas.get_highcard().get_card()))});
     cards board, dead;
+    handlist_collection hands(
+        {ECalc::single_handlist(Hand("AhAs")),
+         ECalc::random_handlist(ECalc::create_hand(Hand("AhAs")))});
 
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate(hands, board, dead, 10000);
     auto end = std::chrono::system_clock::now();
 
-    print_benchmark_result("AhAs v. Random", (end-start), 10000);
+    print_benchmark_result("AhAs v. Random", (end - start), 10000);
   }
 
   TEST_FIXTURE(Setup, BenchmarkRandomVsRandom) {
-    handlist_collection hands({ECalc::random_handlist(0),
-         ECalc::random_handlist(0)});
     cards board, dead;
+    handlist_collection hands(
+        {ECalc::random_handlist(0), ECalc::random_handlist(0)});
 
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate(hands, board, dead, 10000);
     auto end = std::chrono::system_clock::now();
 
-    print_benchmark_result("2 x Random", (end-start), 10000);
+    print_benchmark_result("2 x Random", (end - start), 10000);
   }
 
   TEST_FIXTURE(Setup, BenchmarkRandomVsRandomVsRandom) {
     handlist_collection hands({ECalc::random_handlist(0),
+                               ECalc::random_handlist(0),
+                               ECalc::random_handlist(0)});
+    cards board, dead;
+
+    auto start = std::chrono::system_clock::now();
+    result_collection res = calc.evaluate(hands, board, dead, 10000);
+    auto end = std::chrono::system_clock::now();
+
+    print_benchmark_result("3 x Random", (end - start), 10000);
+  }
+
+  TEST_FIXTURE(Setup, Benchmark4Random) {
+    handlist_collection hands(
+        {ECalc::random_handlist(0), ECalc::random_handlist(0),
          ECalc::random_handlist(0), ECalc::random_handlist(0)});
     cards board, dead;
 
@@ -83,19 +88,7 @@ SUITE(ECalcBenchmarks) {
     result_collection res = calc.evaluate(hands, board, dead, 10000);
     auto end = std::chrono::system_clock::now();
 
-    print_benchmark_result("3 x Random", (end-start), 10000);
-  }
-
-  TEST_FIXTURE(Setup, Benchmark4Random) {
-    handlist_collection hands({ECalc::random_handlist(0),
-         ECalc::random_handlist(0), ECalc::random_handlist(0), ECalc::random_handlist(0)});
-    cards board, dead;
-
-    auto start = std::chrono::system_clock::now();
-    result_collection res = calc.evaluate(hands, board, dead, 10000);
-    auto end = std::chrono::system_clock::now();
-
-    print_benchmark_result("4 x Random", (end-start), 10000);
+    print_benchmark_result("4 x Random", (end - start), 10000);
   }
 }
 

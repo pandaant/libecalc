@@ -1,6 +1,7 @@
 #ifndef ECALC_H
 #define ECALC_H
 
+#include <hand.h>
 #include "result.h"
 #include "types.h"
 #include "macros.h"
@@ -22,8 +23,9 @@ public:
   result_collection evaluate(const handlist_collection &handlists,
                              const cards &boardcards, const cards &deadcards,
                              const int &samples);
-  static handlist single_handlist(card c0, card c1);
+  static handlist single_handlist(const Hand &hand);
   static handlist random_handlist(const bitset &deadcards);
+  static combination create_hand(const Hand &hand);
 
 private:
   result_collection evaluate(const handlist_collection &handlists,
@@ -31,12 +33,11 @@ private:
                              const int &samples);
   card draw_card(bitset &deck);
   int get_rand(const uint32_t max);
-  // void combination_to_stdout(combination c);
   void draw(combination &board, bitset &deck);
   combination get_hand(const handlist &handlist, bitset &deck);
-  combination create_board_from_cards(const cards &_cards) const;
-  bitset create_bitset_from_cards(const cards &_cards) const;
-  bitset create_deck_from_cards(const cards &board, const cards &dead);
+  combination create_board(const cards &_cards) const;
+  bitset create_deck(const cards &board, const cards &dead);
+  bitset create_bitset(const cards &_cards) const;
 };
 };
 
