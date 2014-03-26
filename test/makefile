@@ -5,11 +5,11 @@ CPPFLAGS=-m64 -Ofast -Wall -pedantic -std=c++11 -g
 INCLUDES=-I ../include -I ../../../dep/UnitTest++/src -I ../../poker/include
 OUTFILE=run_tests
 DEPFILE=.depend
-CPP_FILES = $(wildcard src/*.cpp)
+CPP_FILES = $(wildcard *.cpp)
 OBJ_FILES = $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 LIBS= -L ./.. -lecalc -L ../../../dep/UnitTest++ -lUnitTest++ -L ../../poker/dist/Release -lpoker
 
-obj/%.o: src/%.cpp
+obj/%.o: %.cpp
 	$(CC) $(INCLUDES) $(CPPFLAGS) -c -o $@ $<
 
 all: $(OBJ_FILES)

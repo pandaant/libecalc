@@ -23,7 +23,6 @@ public:
           !strcasecmp(t->m_details.suiteName, list[i]) ||
           !strcasecmp(t->m_details.filename, list[i]) ||
           !strcasecmp(t->m_details.filename, dot_cpp_appended.c_str())) {
-        // erring on the side of matching more tests
         return true;
       }
     }
