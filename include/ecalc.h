@@ -1,6 +1,8 @@
 #ifndef ECALC_H
 #define ECALC_H
 
+#define GET_HAND_TRY_MAX 20
+
 #include <hand.h>
 #include "result.h"
 #include "types.h"
@@ -23,6 +25,11 @@ public:
   result_collection evaluate(const handlist_collection &handlists,
                              const cards &boardcards, const cards &deadcards,
                              const int &samples);
+  result_collection evaluate_vs_random(const handlist &_handlist,
+                                       int nb_random_player,
+                                       const cards &boardcards,
+                                       const cards &deadcards,
+                                       const int &samples);
   static handlist single_handlist(const Hand &hand);
   static handlist random_handlist(const bitset &deadcards);
   static combination create_hand(const Hand &hand);

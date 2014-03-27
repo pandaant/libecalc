@@ -44,12 +44,10 @@ SUITE(ECalcBenchmarks) {
 
   TEST_FIXTURE(Setup, BenchmarkAhAsVsRandom) {
     cards board, dead;
-    handlist_collection hands(
-        {ECalc::single_handlist(Hand("AhAs")),
-         ECalc::random_handlist(ECalc::create_hand(Hand("AhAs")))});
 
     auto start = std::chrono::system_clock::now();
-    result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
+    result_collection res = calc.evaluate_vs_random(ECalc::single_handlist(Hand("AhAs")),
+                                          1, board, dead, NB_SAMPLES);
     auto end = std::chrono::system_clock::now();
 
     print_benchmark_result("AhAs v. Random", (end - start), NB_SAMPLES);

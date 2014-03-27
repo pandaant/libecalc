@@ -11,6 +11,18 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
   return evaluate(handlists, board, deck, samples);
 }
 
+result_collection ECalc::evaluate_vs_random(const handlist &_handlist,
+                                            int nb_random_player,
+                                            const cards &boardcards,
+                                            const cards &deadcards,
+                                            const int &samples) {
+  bitset dead = create_bitset(boardcards) | create_bitset(deadcards);
+  handlist random_list = ECalc::random_handlist(dead);
+  handlist_collection lists(nb_random_player + 1, random_list);
+  lists[0] = _handlist;
+  return evaluate(lists, boardcards, deadcards, samples);
+}
+
 result_collection ECalc::evaluate(const handlist_collection &handlists,
                                   const combination &boardcards,
                                   const bitset &deck, const int &samples) {
@@ -65,9 +77,9 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
 handlist ECalc::random_handlist(const bitset &deadcards) {
   int c0, c1;
   handlist hands;
-  for (c0 = 0; c0 < 51; ++c0) {
-    for (c1 = c0 + 1; c1 < 52; ++c1) {
-      if (!(BIT_GET(deadcards, c0) || BIT_GET(deadcards, c1)))
+  for (c0 = 1; c0 < 52; ++c0) {
+    for (c1 = c0 + 1; c1 < 53; ++c1) {
+      if (!(BIT_GET(deadcards, ( c0-1 )) || BIT_GET(deadcards, ( c1-1 ))))
         hands.push_back(SET_C1(SET_C0((combination)0, c0), c1));
     }
   }
@@ -137,9 +149,19 @@ combination ECalc::create_hand(const Hand &hand) {
 }
 
 combination ECalc::get_hand(const handlist &handlist, bitset &deck) {
-  combination hand = handlist[get_rand(handlist.size()) - 1];
-  deck = BIT_CLR(deck, (GET_C0(hand) - 1));
-  deck = BIT_CLR(deck, (GET_C1(hand) - 1));
-  return hand;
+  card c0, c1;
+  combination hand;
+  int counter = GET_HAND_TRY_MAX;
+  while (counter-- != 0) {
+    hand = handlist[get_rand(handlist.size()) - 1];
+    c0 = GET_C0(hand) - 1;
+    c1 = GET_C1(hand) - 1;
+    if (BIT_GET(deck, c0) && BIT_GET(deck, c1)) {
+      deck = BIT_CLR(deck, c0);
+      deck = BIT_CLR(deck, c1);
+      return hand;
+    }
+  }
+  throw std::runtime_error("no hand assignable");
 }
 };
