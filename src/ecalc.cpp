@@ -1,5 +1,6 @@
 #include "ecalc.h"
 #include <algorithm>
+#include <iostream>
 
 namespace Poker {
 ECalc::ECalc(Handranks &hr, const uint32_t seed) : HR(hr), nb_gen(seed) {}
@@ -42,16 +43,13 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
     sim_deck = deck;
     sim_board = boardcards;
 
-    for (p = 0; p < nb_handlists; ++p) {
+    for (p = 0; p < nb_handlists; ++p)
       sim_hands[p] = get_hand(handlists[p], sim_deck);
-    }
 
     draw(sim_board, sim_deck);
 
-    for (p = 0; p < nb_handlists; ++p) {
-      sim_hands[p] |= sim_board;
-      sim_scores[p] = LOOKUP_HAND(HR, sim_hands[p]);
-    }
+    for (p = 0; p < nb_handlists; ++p)
+      sim_scores[p] = LOOKUP_HAND(HR, (sim_hands[p] | sim_board));
 
     max_score = *std::max_element(sim_scores.begin(), sim_scores.end());
 
@@ -63,8 +61,9 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
     }
 
     nb_winner = sim_winners.size();
-    if (nb_winner == 1)
+    if (nb_winner == 1){
       ++results[sim_winners[0]].win;
+    }
     else {
       for (c = 0; c < nb_winner; ++c)
         results[sim_winners[c]].tie += DLUT[nb_winner];
