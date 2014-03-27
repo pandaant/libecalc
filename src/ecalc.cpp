@@ -28,7 +28,7 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
                                   const combination &boardcards,
                                   const bitset &deck, const int &samples) {
   int nb_handlists = handlists.size();
-  result_collection results(handlists.size());
+  result_collection results(handlists.size(), result(samples));
   std::vector<int> sim_winners;
   std::vector<int> sim_scores(nb_handlists);
   handlist sim_hands(nb_handlists);

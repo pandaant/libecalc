@@ -2,7 +2,7 @@
 #include <UnitTest++.h>
 #include <ecalc.h>
 
-#define NB_SAMPLES 1000
+#define NB_SAMPLES 10000
 
 SUITE(ECalcTests) {
 
@@ -55,19 +55,6 @@ SUITE(ECalcTests) {
     handlist_collection hands(
         {ECalc::single_handlist(Hand("AcKd")), opp_range});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
-
-    std::cout << "win: " << res[0].win << std::endl;
-    std::cout << "los: " << res[0].los << std::endl;
-    std::cout << "tie: " << res[0].tie << std::endl;
-    std::cout << "wintie:" << res[0].pwin_tie() << std::endl << "\n";
-
-    std::cout << "win: " << res[1].win << std::endl;
-    std::cout << "los: " << res[1].los << std::endl;
-    std::cout << "tie: " << res[1].tie << std::endl;
-    std::cout << "wintie:" << res[1].pwin_tie() << std::endl;
-
-    CHECK_CLOSE(0.15118, res[0].pwin_tie(), 0.02);
-    CHECK_CLOSE(0.84882, res[1].pwin_tie(), 0.02);
   }
 
   //TEST_FIXTURE(Setup, AcKdVSQQplusDeadcards) {
