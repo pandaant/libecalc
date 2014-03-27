@@ -1,7 +1,8 @@
 # compiler
 CC=clang++
 
-CPPFLAGS=-m64 -Ofast -Wall -pedantic -std=c++11 -g
+DEBUGFLAGS=-O0 -g
+CPPFLAGS=-m64 -O3 -Wall -pedantic -std=c++11
 INCLUDES=-I ../include -I ../../../dep/UnitTest++/src -I ../../poker/include
 OUTFILE=run_tests
 DEPFILE=.depend
