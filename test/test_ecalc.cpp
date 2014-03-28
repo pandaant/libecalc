@@ -1,6 +1,7 @@
+#include <random>
 #include <iostream>
-#include <UnitTest++.h>
 #include <ecalc.hpp>
+#include <UnitTest++.h>
 
 #define NB_SAMPLES 10000
 
@@ -21,33 +22,33 @@ SUITE(ECalcTests) {
     handlist_collection hands(
         {ECalc::random_handlist(0), ECalc::random_handlist(0)});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
-    CHECK_CLOSE(0.5, res[0].pwin_tie(), 0.01);
-    CHECK_CLOSE(0.5, res[1].pwin_tie(), 0.01);
+    CHECK_CLOSE(0.5, res[0].pwin_tie(), 0.02);
+    CHECK_CLOSE(0.5, res[1].pwin_tie(), 0.02);
   }
 
   TEST_FIXTURE(Setup, EvaluateSingleVsRandom) {
     cards board, dead;
     result_collection res = calc.evaluate_vs_random(
         ECalc::single_handlist(Hand("AhAs")), 1, board, dead, NB_SAMPLES);
-    CHECK_CLOSE(0.85204, res[0].pwin_tie(), 0.01);
-    CHECK_CLOSE(1-res[0].pwin_tie(), res[1].pwin_tie(), 0.01);
+    CHECK_CLOSE(0.85204, res[0].pwin_tie(), 0.02);
+    CHECK_CLOSE(1 - res[0].pwin_tie(), res[1].pwin_tie(), 0.02);
   }
 
   TEST_FIXTURE(Setup, AcKdVSJsTs) {
     cards dead;
-    cards board(
-        {(card)Card("Jh").get_card(), (card)Card("Qd").get_card(), (card)Card("Kh").get_card()});
-    handlist_collection hands(
-        {ECalc::single_handlist(Hand("AcKd")), ECalc::single_handlist(Hand("JsTs"))});
+    cards board({(card)Card("Jh").get_card(), (card)Card("Qd").get_card(),
+                 (card)Card("Kh").get_card()});
+    handlist_collection hands({ECalc::single_handlist(Hand("AcKd")),
+                               ECalc::single_handlist(Hand("JsTs"))});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
-    CHECK_CLOSE(0.66313, res[0].pwin_tie(), 0.01);
-    CHECK_CLOSE(0.33687, res[1].pwin_tie(), 0.01);
+    CHECK_CLOSE(0.66313, res[0].pwin_tie(), 0.02);
+    CHECK_CLOSE(0.33687, res[1].pwin_tie(), 0.02);
   }
 
   TEST_FIXTURE(Setup, AcKdVSQQplus) {
     cards dead;
-    cards board(
-        {(card)Card("Jh").get_card(), (card)Card("Qs").get_card(), (card)Card("Kc").get_card()});
+    cards board({(card)Card("Jh").get_card(), (card)Card("Qs").get_card(),
+                 (card)Card("Kc").get_card()});
 
     handlist opp_range({ECalc::create_hand(Hand("AhAs")),
                         ECalc::create_hand(Hand("KhKs")),
@@ -58,10 +59,10 @@ SUITE(ECalcTests) {
   }
 
   TEST_FIXTURE(Setup, AcKdVSQQplusDeadcards) {
-    cards dead(
-        {(card)Card("7h").get_card(), (card)Card("9d").get_card(), (card)Card("Tc").get_card()});
-    cards board(
-        {(card)Card("Jh").get_card(), (card)Card("Qs").get_card(), (card)Card("Kc").get_card()});
+    cards dead({(card)Card("7h").get_card(), (card)Card("9d").get_card(),
+                (card)Card("Tc").get_card()});
+    cards board({(card)Card("Jh").get_card(), (card)Card("Qs").get_card(),
+                 (card)Card("Kc").get_card()});
 
     handlist opp_range({ECalc::create_hand(Hand("AhAs")),
                         ECalc::create_hand(Hand("KhKs")),
@@ -69,8 +70,26 @@ SUITE(ECalcTests) {
     handlist_collection hands(
         {ECalc::single_handlist(Hand("AcKd")), opp_range});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
-    CHECK_CLOSE(0.13202, res[0].pwin_tie(), 0.01);
-    CHECK_CLOSE(0.86798, res[1].pwin_tie(), 0.01);
+    CHECK_CLOSE(0.13202, res[0].pwin_tie(), 0.02);
+    CHECK_CLOSE(0.86798, res[1].pwin_tie(), 0.02);
+  }
+
+  TEST_FIXTURE(Setup, AcKdVS2QQplusDeadcards) {
+    cards dead({(card)Card("7h").get_card(), (card)Card("9d").get_card(),
+                (card)Card("Tc").get_card()});
+    cards board({(card)Card("Jh").get_card(), (card)Card("Qs").get_card(),
+                 (card)Card("Kc").get_card()});
+
+    handlist opp_range({ECalc::create_hand(Hand("AhAs")),
+                        ECalc::create_hand(Hand("KhKs")),
+                        ECalc::create_hand(Hand("QcQd"))});
+
+    handlist_collection hands(
+        {ECalc::single_handlist(Hand("AcKd")), opp_range, opp_range});
+    result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
+    CHECK_CLOSE(0.08333, res[0].pwin_tie(), 0.02);
+    CHECK_CLOSE(0.45833, res[1].pwin_tie(), 0.02);
+    CHECK_CLOSE(0.45833, res[2].pwin_tie(), 0.02);
   }
 
   /**

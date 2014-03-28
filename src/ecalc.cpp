@@ -13,7 +13,7 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
 }
 
 result_collection ECalc::evaluate_vs_random(const handlist &_handlist,
-                                            int nb_random_player,
+                                            size_t nb_random_player,
                                             const cards &boardcards,
                                             const cards &deadcards,
                                             const int &samples) {
@@ -27,16 +27,17 @@ result_collection ECalc::evaluate_vs_random(const handlist &_handlist,
 result_collection ECalc::evaluate(const handlist_collection &handlists,
                                   const combination &boardcards,
                                   const bitset &deck, const int &samples) {
-  int nb_handlists = handlists.size();
+  size_t nb_handlists = handlists.size();
   result_collection results(handlists.size(), result(samples));
-  std::vector<int> sim_winners;
+  std::vector<size_t> sim_winners;
   std::vector<int> sim_scores(nb_handlists);
   handlist sim_hands(nb_handlists);
 
   bitset sim_deck;
   combination sim_board;
 
-  int s, p, r, c, max_score, nb_winner;
+  int s, max_score;
+  size_t p, r, c, nb_winner;
   for (s = 0; s < samples; ++s) {
     sim_winners.clear();
 
@@ -78,7 +79,7 @@ handlist ECalc::random_handlist(const bitset &deadcards) {
   for (c0 = 1; c0 < 52; ++c0) {
     for (c1 = c0 + 1; c1 < 53; ++c1) {
       if (!(BIT_GET(deadcards, c0) || BIT_GET(deadcards, c1)))
-        hands.push_back(SET_C1(SET_C0((combination)0, c0), c1));
+        hands.push_back(CREATE_HAND(c0,c1));
     }
   }
   return hands;
@@ -112,12 +113,13 @@ void ECalc::draw(combination &board, bitset &deck) {
     board = SET_C6(board, draw_card(deck));
 }
 
-int ECalc::get_rand(const uint32_t max) {
-  return static_cast<double>(nb_gen.rand()) / XORRAND_MAX * max + 1;
+unsigned ECalc::get_rand(const uint32_t max) {
+  return static_cast<unsigned>(
+      static_cast<double>(nb_gen.rand()) / XORRAND_MAX * max + 1);
 }
 
 combination ECalc::create_board(const cards &_cards) const {
-  int missing = 5 - _cards.size();
+  int missing = 5 - static_cast<int>(_cards.size());
   cards full_board = _cards;
   full_board.resize(5);
   std::fill(full_board.begin() + (5 - missing), full_board.begin() + 5, CARD_F);
@@ -127,16 +129,16 @@ combination ECalc::create_board(const cards &_cards) const {
 
 bitset ECalc::create_bitset(const cards &_cards) const {
   bitset bitc = 0;
-  for (int c : _cards)
+  for (card c : _cards)
     bitc = BIT_SET(bitc, c);
   return bitc;
 }
 
 bitset ECalc::create_deck(const cards &board, const cards &dead) {
   bitset deck = DECK_M;
-  for (int c : board)
+  for (card c : board)
     deck = BIT_CLR(deck, c);
-  for (int c : dead)
+  for (card c : dead)
     deck = BIT_CLR(deck, c);
   return deck;
 }
@@ -150,16 +152,16 @@ combination ECalc::get_hand(const handlist &handlist, bitset &deck) {
   card c0, c1;
   combination hand;
   int counter = GET_HAND_TRY_MAX;
+  uint32_t nb_handlists = static_cast<uint32_t>(handlist.size());
   while (counter-- != 0) {
-    hand = handlist[get_rand(handlist.size()) - 1];
+    hand = handlist[static_cast<size_t>(get_rand(nb_handlists) - 1)];
     c0 = GET_C0(hand);
     c1 = GET_C1(hand);
     if (BIT_GET(deck, c0) && BIT_GET(deck, c1)) {
-      deck = BIT_CLR(deck, c0);
-      deck = BIT_CLR(deck, c1);
+      deck = BIT_CLR(BIT_CLR(deck, c0), c1);
       return hand;
     }
   }
   throw std::runtime_error("no hand assignable");
 }
-};
+}

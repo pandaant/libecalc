@@ -16,7 +16,7 @@ struct result {
   inline double ptie() const { return tie / nb_samples; }
   inline double plos() const { return los / nb_samples; }
   inline double pwin_tie() const { return ((win + tie) / nb_samples); }
-  inline int sum() const { return (win + tie + los); }
+  inline double sum() const { return (win + tie + los); }
 };
 }
 

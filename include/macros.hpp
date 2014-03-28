@@ -28,7 +28,7 @@
 // set cards
 // combination c
 // card v
-#define M_CARD(v) ((combination)((v) & CARD_M))
+#define M_CARD(v) static_cast<combination>((v) & CARD_M)
 #define SET_C0(c, v) ((c &CARD0_M) | M_CARD(v))
 #define SET_C1(c, v) ((c &CARD1_M) | (M_CARD(v) << 8))
 #define SET_C2(c, v) ((c &CARD2_M) | (M_CARD(v) << 16))
@@ -40,16 +40,19 @@
 // bitset functions
 // bitset b
 // index i (int)
-#define BIT_M ((bitset)1)
+#define BIT_M static_cast<bitset>(1)
 #define BIT_SET(b, i) (b | (BIT_M << i))
 #define BIT_CLR(b, i) (b & ~(BIT_M << i))
 #define BIT_GET(b, i) (b &(BIT_M << i))
 
 // set board. not existing cards should be 0
-#define CREATE_BOARD(f1, f2, f3, t, r)                                         \
-  SET_C6(SET_C5(SET_C4(SET_C3(SET_C2((bitset)0, f1), f2), f3), t), r)
+#define CREATE_BOARD(flop1, flop2, flop3, turn, river)                         \
+  SET_C6(SET_C5(SET_C4(SET_C3(SET_C2(static_cast<bitset>(0), flop1), flop2),   \
+                       flop3),                                                 \
+                turn),                                                         \
+         river)
 
-#define CREATE_HAND(c0, c1) SET_C1(SET_C0((combination)0, c0), c1)
+#define CREATE_HAND(c0, c1) SET_C1(SET_C0(static_cast<combination>(0), c0), c1)
 
 #define LOOKUP_HAND(HR, c)                                                     \
   HR[HR[HR[HR[HR[HR[HR[53 + GET_C0(c)] + GET_C1(c)] + GET_C2(c)] +             \

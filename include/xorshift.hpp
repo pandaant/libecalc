@@ -31,7 +31,7 @@ struct xorshift {
     w = seed + 84167;
   }
 };
-};
+}
 
 #endif /* XORSHIFT_H */
 

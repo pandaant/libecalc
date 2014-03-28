@@ -26,7 +26,7 @@ public:
                              const cards &boardcards, const cards &deadcards,
                              const int &samples);
   result_collection evaluate_vs_random(const handlist &_handlist,
-                                       int nb_random_player,
+                                       size_t nb_random_player,
                                        const cards &boardcards,
                                        const cards &deadcards,
                                        const int &samples);
@@ -39,13 +39,13 @@ private:
                              const combination &boardcards, const bitset &deck,
                              const int &samples);
   card draw_card(bitset &deck);
-  int get_rand(const uint32_t max);
+  unsigned get_rand(const uint32_t max);
   void draw(combination &board, bitset &deck);
   combination get_hand(const handlist &handlist, bitset &deck);
   combination create_board(const cards &_cards) const;
   bitset create_deck(const cards &board, const cards &dead);
   bitset create_bitset(const cards &_cards) const;
 };
-};
+}
 
 #endif

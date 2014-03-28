@@ -32,6 +32,6 @@ private:
   Handranks(const Handranks &hr) = default;
   Handranks &operator=(const Handranks &hr) = default;
 };
-};
+}
 
 #endif
