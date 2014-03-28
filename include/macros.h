@@ -4,7 +4,7 @@
 // mask for one card
 #define CARD_F 0
 #define CARD_M 0xFF
-#define DECK_M 0x000FFFFFFFFFFFFF
+#define DECK_M 0x001FFFFFFFFFFFFe
 
 // card masks
 #define CARD0_M 0xFFFFFFFFFFFFFF00
@@ -45,7 +45,7 @@
 #define BIT_CLR(b, i) (b & ~(BIT_M << i))
 #define BIT_GET(b, i) (b &(BIT_M << i))
 
-// set board. not existing cards should be 254
+// set board. not existing cards should be 0
 #define CREATE_BOARD(f1, f2, f3, t, r)                                         \
   SET_C6(SET_C5(SET_C4(SET_C3(SET_C2((bitset)0, f1), f2), f3), t), r)
 

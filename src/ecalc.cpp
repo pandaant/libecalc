@@ -61,10 +61,9 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
     }
 
     nb_winner = sim_winners.size();
-    if (nb_winner == 1){
+    if (nb_winner == 1) {
       ++results[sim_winners[0]].win;
-    }
-    else {
+    } else {
       for (c = 0; c < nb_winner; ++c)
         results[sim_winners[c]].tie += DLUT[nb_winner];
     }
@@ -78,7 +77,7 @@ handlist ECalc::random_handlist(const bitset &deadcards) {
   handlist hands;
   for (c0 = 1; c0 < 52; ++c0) {
     for (c1 = c0 + 1; c1 < 53; ++c1) {
-      if (!(BIT_GET(deadcards, ( c0-1 )) || BIT_GET(deadcards, ( c1-1 ))))
+      if (!(BIT_GET(deadcards, c0) || BIT_GET(deadcards, c1)))
         hands.push_back(SET_C1(SET_C0((combination)0, c0), c1));
     }
   }
@@ -93,8 +92,8 @@ card ECalc::draw_card(bitset &deck) {
   card rand;
   while (true) {
     rand = get_rand(52);
-    if (BIT_GET(deck, (rand - 1))) {
-      deck = BIT_CLR(deck, (rand - 1));
+    if (BIT_GET(deck, rand)) {
+      deck = BIT_CLR(deck, rand);
       return rand;
     }
   }
@@ -129,16 +128,16 @@ combination ECalc::create_board(const cards &_cards) const {
 bitset ECalc::create_bitset(const cards &_cards) const {
   bitset bitc = 0;
   for (int c : _cards)
-    bitc = BIT_SET(bitc, (c - 1));
+    bitc = BIT_SET(bitc, c);
   return bitc;
 }
 
 bitset ECalc::create_deck(const cards &board, const cards &dead) {
   bitset deck = DECK_M;
   for (int c : board)
-    deck = BIT_CLR(deck, (c - 1));
+    deck = BIT_CLR(deck, c);
   for (int c : dead)
-    deck = BIT_CLR(deck, (c - 1));
+    deck = BIT_CLR(deck, c);
   return deck;
 }
 
@@ -153,8 +152,8 @@ combination ECalc::get_hand(const handlist &handlist, bitset &deck) {
   int counter = GET_HAND_TRY_MAX;
   while (counter-- != 0) {
     hand = handlist[get_rand(handlist.size()) - 1];
-    c0 = GET_C0(hand) - 1;
-    c1 = GET_C1(hand) - 1;
+    c0 = GET_C0(hand);
+    c1 = GET_C1(hand);
     if (BIT_GET(deck, c0) && BIT_GET(deck, c1)) {
       deck = BIT_CLR(deck, c0);
       deck = BIT_CLR(deck, c1);
