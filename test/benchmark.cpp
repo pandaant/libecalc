@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <UnitTest++.h>
-#include <ecalc.h>
+#include <ecalc.hpp>
 
 #define NB_SAMPLES 10000
 

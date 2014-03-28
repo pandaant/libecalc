@@ -4,11 +4,11 @@
 #define GET_HAND_TRY_MAX 20
 
 #include <hand.h>
-#include "result.h"
-#include "types.h"
-#include "macros.h"
-#include "handranks.h"
-#include "xorshift.h"
+#include "result.hpp"
+#include "types.hpp"
+#include "macros.hpp"
+#include "handranks.hpp"
+#include "xorshift.hpp"
 
 namespace Poker {
 

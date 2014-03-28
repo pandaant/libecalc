@@ -1,7 +1,7 @@
 #include <UnitTest++.h>
-#include <result.h>
-#include <types.h>
-#include <macros.h>
+#include <result.hpp>
+#include <types.hpp>
+#include <macros.hpp>
 
 SUITE(ECalcMacroTests) {
 

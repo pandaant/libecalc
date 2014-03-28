@@ -1,4 +1,4 @@
-#include "ecalc.h"
+#include "ecalc.hpp"
 #include <algorithm>
 #include <iostream>
 
