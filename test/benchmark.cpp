@@ -90,5 +90,33 @@ SUITE(ECalcBenchmarks) {
 
     print_benchmark_result("4 x Random", (end - start), NB_SAMPLES);
   }
+
+  TEST_FIXTURE(Setup, Benchmark5Random) {
+    handlist_collection hands(
+        {ECalc::random_handlist(0), ECalc::random_handlist(0),
+         ECalc::random_handlist(0), ECalc::random_handlist(0),
+         ECalc::random_handlist(0)});
+    cards board, dead;
+
+    auto start = std::chrono::system_clock::now();
+    result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
+    auto end = std::chrono::system_clock::now();
+
+    print_benchmark_result("5 x Random", (end - start), NB_SAMPLES);
+  }
+
+  TEST_FIXTURE(Setup, Benchmark6Random) {
+    handlist_collection hands(
+        {ECalc::random_handlist(0), ECalc::random_handlist(0),
+         ECalc::random_handlist(0), ECalc::random_handlist(0),
+         ECalc::random_handlist(0), ECalc::random_handlist(0)});
+    cards board, dead;
+
+    auto start = std::chrono::system_clock::now();
+    result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
+    auto end = std::chrono::system_clock::now();
+
+    print_benchmark_result("6 x Random", (end - start), NB_SAMPLES);
+  }
 }
 

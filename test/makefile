@@ -20,6 +20,8 @@ depend: $(DEPFILE)
 $(DEPFILE): $(CPP_FILES)
 	rm -f ./$(DEPFILE)
 	$(CC) $(INCLUDES) $(CPPFLAGS) -MM $^>>./$(DEPFILE);
+	# make libecalc
+	cd .. && $(MAKE);
 include $(DEPFILE)
 
 clean:
