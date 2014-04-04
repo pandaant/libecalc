@@ -3,7 +3,7 @@
 
 #define GET_HAND_TRY_MAX 20
 
-#include <hand.h>
+#include <poker/hand.h>
 #include "result.hpp"
 #include "types.hpp"
 #include "macros.hpp"
