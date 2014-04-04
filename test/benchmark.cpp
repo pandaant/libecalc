@@ -1,4 +1,4 @@
-#include <poker/hand.h>
+#include <poker/hand.hpp>
 #include <chrono>
 #include <vector>
 #include <iostream>
