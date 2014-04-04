@@ -2,15 +2,12 @@
 # keep symbols.
 CXX = clang++ -g
 
-# common compiler flags and specific
-# flags for each target.
- 
 # c++11 compilance and dependency gen 
 # and disable c++98 compilance
 CXXFLAGS  = -std=c++11 -MMD -MP
 
 # search paths for header files
-INCLUDES = -I ../include \
+INCLUDES = -I ../include/ecalc \
 		   -I ../../libpoker/include \
 		   -I ../../../dep/UnitTest++/src
 

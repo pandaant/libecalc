@@ -2,7 +2,7 @@
 CXX = clang++ -g
 
 # variables for libecalc
-INCLUDES=-I ./include -I ../libpoker/include
+INCLUDES=-I ./include/ecalc -I ../libpoker/include
 CXXFLAGS=-m64 -static -ansi -std=c++11 -MMD -MP 
 
 # add paths of libraries the
