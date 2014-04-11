@@ -32,6 +32,7 @@ public:
                                        const int &samples);
   static handlist single_handlist(const Hand &hand);
   static handlist random_handlist(const bitset &deadcards);
+  static handlist array_handlist(const vector<Hand> &hands);
   static combination create_hand(const Hand &hand);
 
 private:

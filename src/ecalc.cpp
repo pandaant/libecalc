@@ -85,6 +85,15 @@ handlist ECalc::random_handlist(const bitset &deadcards) {
   return hands;
 }
 
+handlist ECalc::array_handlist(const vector<Hand> &hands) {
+  handlist list(hands.size());
+  for (size_t i = 0; i < hands.size(); ++i) {
+    list[i] = CREATE_HAND(hands[i].get_highcard().get_card(),
+                                hands[i].get_lowcard().get_card());
+  }
+  return list;
+}
+
 handlist ECalc::single_handlist(const Hand &hand) {
   return handlist({create_hand(hand)});
 }

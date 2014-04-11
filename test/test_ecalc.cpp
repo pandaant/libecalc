@@ -111,5 +111,11 @@ SUITE(ECalcTests) {
       CHECK(true);
     }
   }
+
+  TEST_FIXTURE(Setup, TestArrayHandlist){
+      vector<Poker::Hand> hands({Hand("AhAs"),Hand("AhKs")});
+      handlist list = ECalc::array_handlist(hands);
+      CHECK_EQUAL(2,list.size());
+  }
 }
 

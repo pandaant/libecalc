@@ -7,9 +7,7 @@ CXXFLAGS=-m64 -static -ansi -std=c++11 -MMD -MP
 
 # add paths of libraries the
 # targets depend on.
-LIBRARIES = -L ../lib/$(target) -lecalc \
-			-L ../../libpoker/lib/$(target) -lpoker \
-			-L ../../../dep/UnitTest++ -lUnitTest++ 
+LIBRARIES =
 
 ifeq ($(target),debug)
     CXXFLAGS +=-O0 -Weverything -Wno-c++98-compat #-Werror
