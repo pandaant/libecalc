@@ -15,7 +15,9 @@ public:
       throw std::runtime_error("Handranks file could not be loaded.");
   }
 
-  const int &operator[](unsigned int i) const { return HR[i]; }
+  ~Handranks(){}
+
+  const int &operator[](const unsigned &i) const { return HR[i]; }
 
   bool load_handranks(const char *filename) {
     memset(HR, 0, sizeof(HR));

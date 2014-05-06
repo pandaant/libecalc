@@ -47,8 +47,8 @@ SUITE(ECalcBenchmarks) {
     cards board, dead;
 
     auto start = std::chrono::system_clock::now();
-    result_collection res = calc.evaluate_vs_random(ECalc::single_handlist(Hand("AhAs")),
-                                          1, board, dead, NB_SAMPLES);
+    result_collection res = calc.evaluate_vs_random(
+        ECalc::single_handlist(Hand("AhAs")), 1, board, dead, NB_SAMPLES);
     auto end = std::chrono::system_clock::now();
 
     print_benchmark_result("AhAs v. Random", (end - start), NB_SAMPLES);

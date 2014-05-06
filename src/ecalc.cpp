@@ -79,7 +79,7 @@ handlist ECalc::random_handlist(const bitset &deadcards) {
   for (c0 = 1; c0 < 52; ++c0) {
     for (c1 = c0 + 1; c1 < 53; ++c1) {
       if (!(BIT_GET(deadcards, c0) || BIT_GET(deadcards, c1)))
-        hands.push_back(CREATE_HAND(c0,c1));
+        hands.push_back(CREATE_HAND(c0, c1));
     }
   }
   return hands;
@@ -89,7 +89,7 @@ handlist ECalc::array_handlist(const vector<Hand> &hands) {
   handlist list(hands.size());
   for (size_t i = 0; i < hands.size(); ++i) {
     list[i] = CREATE_HAND(hands[i].get_highcard().get_card(),
-                                hands[i].get_lowcard().get_card());
+                          hands[i].get_lowcard().get_card());
   }
   return list;
 }
