@@ -5,7 +5,7 @@
 #include <string.h>
 #include <stdexcept>
 
-namespace Poker {
+namespace ecalc {
 class Handranks {
   int HR[32487834];
 

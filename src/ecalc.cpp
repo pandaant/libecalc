@@ -1,8 +1,12 @@
 #include "ecalc.hpp"
 #include <algorithm>
-#include <iostream>
 
-namespace Poker {
+namespace ecalc {
+const double ECalc::DLUT[] = {0,                   1,                   0.5,
+                              0.33333333333333333, 0.25,                0.2,
+                              0.16666666666666666, 0.14285714285714285, 0.125,
+                              0.11111111111111111, 0.1};
+
 ECalc::ECalc(Handranks &hr, const uint32_t seed) : HR(hr), nb_gen(seed) {}
 result_collection ECalc::evaluate(const handlist_collection &handlists,
                                   const cards &boardcards,
@@ -124,7 +128,7 @@ void ECalc::draw(combination &board, bitset &deck) {
 
 unsigned ECalc::get_rand(const uint32_t max) {
   return static_cast<unsigned>(
-      static_cast<double>(nb_gen.rand()) / XORRAND_MAX * max + 1);
+      static_cast<double>(nb_gen()) / nb_gen.MAX * max + 1);
 }
 
 combination ECalc::create_board(const cards &_cards) const {

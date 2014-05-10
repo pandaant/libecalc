@@ -8,17 +8,15 @@
 #include "types.hpp"
 #include "macros.hpp"
 #include "handranks.hpp"
-#include "xorshift.hpp"
+#include "xorshift_generator.hpp"
 
-namespace Poker {
+namespace ecalc {
+using Poker::Hand;
+using std::vector;
 
-const double DLUT[] = { 0,                   1,                   0.5,
-                        0.33333333333333333, 0.25,                0.2,
-                        0.16666666666666666, 0.14285714285714285, 0.125,
-                        0.11111111111111111, 0.1 };
 class ECalc {
   Handranks &HR;
-  xorshift nb_gen;
+  xorshift_generator nb_gen;
 
 public:
   ECalc(Handranks &hr, const uint32_t seed = 0);
@@ -36,6 +34,8 @@ public:
   static combination create_hand(const Hand &hand);
 
 private:
+  static const double DLUT[];
+
   result_collection evaluate(const handlist_collection &handlists,
                              const combination &boardcards, const bitset &deck,
                              const int &samples);

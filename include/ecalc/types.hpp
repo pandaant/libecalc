@@ -4,7 +4,7 @@
 #include <vector>
 #include <stdint.h>
 
-namespace Poker {
+namespace ecalc {
 typedef unsigned int card;
 typedef uint64_t bitset;
 typedef uint64_t combination;

@@ -8,6 +8,7 @@
 SUITE(ECalcTests) {
 
   using std::vector;
+  using namespace ecalc; 
   using namespace Poker;
 
   struct Setup {

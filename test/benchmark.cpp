@@ -11,6 +11,7 @@ SUITE(ECalcBenchmarks) {
 
   using std::vector;
   using namespace std::chrono;
+  using namespace ecalc;
   using namespace Poker;
 
   struct Setup {

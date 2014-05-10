@@ -5,7 +5,7 @@
 
 SUITE(ECalcMacroTests) {
 
-  using namespace Poker;
+  using namespace ecalc;
 
   TEST(TestGetSetCards) {
     card c0 = 1, c1 = 2, c2 = 3, c3 = 4, c4 = 5, c5 = 6, c6 = 7;

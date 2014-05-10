@@ -1,7 +1,7 @@
 #ifndef ECALC_RESULT_H
 #define ECALC_RESULT_H
 
-namespace Poker {
+namespace ecalc {
 struct result {
   int nb_samples;
   double win;
