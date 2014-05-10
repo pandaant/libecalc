@@ -19,7 +19,13 @@ class ECalc {
   xorshift_generator nb_gen;
 
 public:
+  /**
+   * constructor
+   * @param hr      A Lookuptable containing handstrengths
+   * @param seed    A seed to initialize the random generator
+   */
   ECalc(Handranks &hr, const uint32_t seed = 0);
+
   result_collection evaluate(const handlist_collection &handlists,
                              const cards &boardcards, const cards &deadcards,
                              const int &samples);
