@@ -17,7 +17,7 @@ result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
   return evaluate(handlists, board, deck, samples);
 }
 
-result_collection ECalc::evaluate_vs_random(Handlist* _handlist,
+result_collection ECalc::evaluate_vs_random(Handlist* handlist,
                                             size_t nb_random_player,
                                             const cards &boardcards,
                                             const cards &deadcards,
@@ -25,7 +25,7 @@ result_collection ECalc::evaluate_vs_random(Handlist* _handlist,
   bitset dead = create_bitset(boardcards) | create_bitset(deadcards);
   Handlist *random_list = new RandomHandlist(dead);
   Handlist::collection_t lists(nb_random_player + 1, random_list);
-  lists[0] = _handlist;
+  lists[0] = handlist;
   result_collection results = evaluate(lists, boardcards, deadcards, samples);
   delete random_list;
   return results;
@@ -38,7 +38,7 @@ result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
   result_collection results(handlists.size(), Result(samples));
   std::vector<size_t> sim_winners;
   std::vector<int> sim_scores(nb_handlists);
-  handlist sim_hands(nb_handlists);
+  std::vector<combination> sim_hands(nb_handlists);
 
   bitset sim_deck;
   combination sim_board;
@@ -104,18 +104,18 @@ void ECalc::draw(combination &board, bitset &deck) {
     board = SET_C6(board, draw_card(deck));
 }
 
-combination ECalc::create_board(const cards &_cards) const {
-  int missing = 5 - static_cast<int>(_cards.size());
-  cards full_board = _cards;
+combination ECalc::create_board(const cards &cards_) const {
+  int missing = 5 - static_cast<int>(cards_.size());
+  cards full_board = cards_;
   full_board.resize(5);
   std::fill(full_board.begin() + (5 - missing), full_board.begin() + 5, CARD_F);
   return CREATE_BOARD(full_board[0], full_board[1], full_board[2],
                       full_board[3], full_board[4]);
 }
 
-bitset ECalc::create_bitset(const cards &_cards) const {
+bitset ECalc::create_bitset(const cards &cards_) const {
   bitset bitc = 0;
-  for (card c : _cards)
+  for (card c : cards_)
     bitc = BIT_SET(bitc, c);
   return bitc;
 }
@@ -129,20 +129,4 @@ bitset ECalc::create_deck(const cards &board, const cards &dead) {
   return deck;
 }
 
-combination ECalc::get_hand(const handlist &handlist, bitset &deck) {
-  card c0, c1;
-  combination hand;
-  int counter = GET_HAND_TRY_MAX;
-  uint32_t nb_handlists = static_cast<uint32_t>(handlist.size());
-  while (counter-- != 0) {
-    hand = handlist[static_cast<size_t>(nb_gen(nb_handlists) - 1)];
-    c0 = GET_C0(hand);
-    c1 = GET_C1(hand);
-    if (BIT_GET(deck, c0) && BIT_GET(deck, c1)) {
-      deck = BIT_CLR(BIT_CLR(deck, c0), c1);
-      return hand;
-    }
-  }
-  throw std::runtime_error("no hand assignable");
-}
 }

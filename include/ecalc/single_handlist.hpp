@@ -5,6 +5,9 @@
 
 namespace ecalc {
 
+// ----------------------------------------------------------------------
+/// @brief   for a range including only one Hand.
+// ----------------------------------------------------------------------
 class SingleHandlist : public Handlist {
 public:
   explicit SingleHandlist(const poker::Hand &hand)

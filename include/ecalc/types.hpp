@@ -9,7 +9,6 @@ typedef unsigned int card;
 typedef uint64_t bitset;
 typedef uint64_t combination;
 typedef std::vector<card> cards;
-typedef std::vector<combination> handlist;
 typedef std::vector<Result> result_collection;
 }
 

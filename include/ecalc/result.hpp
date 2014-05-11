@@ -30,15 +30,44 @@ struct Result {
   // ----------------------------------------------------------------------
   double los;
 
-  Result(int _nb_samples) : nb_samples(_nb_samples), win(0), tie(0), los(0) {}
-  Result(int _nb_samples, double _win, double _tie, double _los)
-      : nb_samples(_nb_samples), win(_win), tie(_tie), los(_los) {}
+  // ----------------------------------------------------------------------
+  /// @brief   stores the results for one handlist
+  ///
+  /// @param nb_samples_ sum of samples simulated
+  // ----------------------------------------------------------------------
+  explicit Result(const int &nb_samples_)
+      : nb_samples(nb_samples_), win(0), tie(0), los(0) {}
+  Result(const int &nb_samples_, const double &win_, const double &tie_,
+         const double &los_)
+      : nb_samples(nb_samples_), win(win_), tie(tie_), los(los_) {}
 
+  // ----------------------------------------------------------------------
+  /// @brief   calculate the percentage of simulations won
+  ///
+  /// @return percentage won
+  // ----------------------------------------------------------------------
   inline double pwin() const { return win / nb_samples; }
+
+  // ----------------------------------------------------------------------
+  /// @brief   calculate the percentage of simulations tied
+  ///
+  /// @return percentage tied
+  // ----------------------------------------------------------------------
   inline double ptie() const { return tie / nb_samples; }
+
+  // ----------------------------------------------------------------------
+  /// @brief   calculcate the percentage of simulations lost
+  ///
+  /// @return percentage lost
+  // ----------------------------------------------------------------------
   inline double plos() const { return los / nb_samples; }
+
+  // ----------------------------------------------------------------------
+  /// @brief   sum of pwin and ptie
+  ///
+  /// @return percentage won + tie
+  // ----------------------------------------------------------------------
   inline double pwin_tie() const { return ((win + tie) / nb_samples); }
-  inline double sum() const { return (win + tie + los); }
 };
 }
 
