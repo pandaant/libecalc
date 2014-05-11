@@ -5,12 +5,12 @@
 #include <cstdint>
 
 namespace ecalc {
-class xorshift_generator {
+class XOrShiftGenerator {
 public:
   static const uint32_t MAX;
   static const uint32_t MIN;
 
-  explicit xorshift_generator(uint32_t _seed = 0) {
+  explicit XOrShiftGenerator(uint32_t _seed = 0) {
     x = 123456789;
     y = 362436069;
     z = 521288629;
@@ -29,7 +29,7 @@ public:
 
   uint32_t operator()(const uint32_t &max) {
     return static_cast<unsigned>(
-        static_cast<double>(xorshift_generator::operator()()) / MAX * max + 1);
+        static_cast<double>(XOrShiftGenerator::operator()()) / MAX * max + 1);
   }
 
   void seed(uint32_t seed) {

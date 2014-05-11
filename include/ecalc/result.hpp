@@ -6,7 +6,7 @@ namespace ecalc {
 // ----------------------------------------------------------------------
 /// @brief   stores the equities for one range in the evaluation process.
 // ----------------------------------------------------------------------
-struct result {
+struct Result {
 
   // ----------------------------------------------------------------------
   /// @brief   sum of all simulations played
@@ -30,8 +30,8 @@ struct result {
   // ----------------------------------------------------------------------
   double los;
 
-  result(int _nb_samples) : nb_samples(_nb_samples), win(0), tie(0), los(0) {}
-  result(int _nb_samples, double _win, double _tie, double _los)
+  Result(int _nb_samples) : nb_samples(_nb_samples), win(0), tie(0), los(0) {}
+  Result(int _nb_samples, double _win, double _tie, double _los)
       : nb_samples(_nb_samples), win(_win), tie(_tie), los(_los) {}
 
   inline double pwin() const { return win / nb_samples; }

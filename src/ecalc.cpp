@@ -23,17 +23,19 @@ result_collection ECalc::evaluate_vs_random(Handlist* _handlist,
                                             const cards &deadcards,
                                             const int &samples) {
   bitset dead = create_bitset(boardcards) | create_bitset(deadcards);
-  Handlist* random_list = new RandomHandlist(dead);
+  Handlist *random_list = new RandomHandlist(dead);
   Handlist::collection_t lists(nb_random_player + 1, random_list);
   lists[0] = _handlist;
-  return evaluate(lists, boardcards, deadcards, samples);
+  result_collection results = evaluate(lists, boardcards, deadcards, samples);
+  delete random_list;
+  return results;
 }
 
 result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const combination &boardcards,
                                   const bitset &deck, const int &samples) {
   size_t nb_handlists = handlists.size();
-  result_collection results(handlists.size(), result(samples));
+  result_collection results(handlists.size(), Result(samples));
   std::vector<size_t> sim_winners;
   std::vector<int> sim_scores(nb_handlists);
   handlist sim_hands(nb_handlists);

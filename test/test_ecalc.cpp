@@ -28,14 +28,20 @@ SUITE(ECalcTests) {
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
     CHECK_CLOSE(0.5, res[0].pwin_tie(), 0.02);
     CHECK_CLOSE(0.5, res[1].pwin_tie(), 0.02);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, EvaluateSingleVsRandom) {
     cards board, dead;
+    Handlist* hand = new SingleHandlist(Hand("AhAs"));
     result_collection res = calc.evaluate_vs_random(
-        new SingleHandlist(Hand("AhAs")), 1, board, dead, NB_SAMPLES);
+      hand , 1, board, dead, NB_SAMPLES);
     CHECK_CLOSE(0.85204, res[0].pwin_tie(), 0.02);
     CHECK_CLOSE(1 - res[0].pwin_tie(), res[1].pwin_tie(), 0.02);
+
+    delete hand;
   }
 
   TEST_FIXTURE(Setup, AcKdVSJsTs) {
@@ -48,6 +54,9 @@ SUITE(ECalcTests) {
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
     CHECK_CLOSE(0.66313, res[0].pwin_tie(), 0.02);
     CHECK_CLOSE(0.33687, res[1].pwin_tie(), 0.02);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, AcKdVSQQplus) {
@@ -55,11 +64,13 @@ SUITE(ECalcTests) {
     cards board({(card)Card("Jh").card(), (card)Card("Qs").card(),
                  (card)Card("Kc").card()});
 
-    Handlist *opp_range =
-        new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")});
     Handlist::collection_t hands(
-        {new SingleHandlist(Hand("AcKd")), opp_range});
+        {new SingleHandlist(Hand("AcKd")),
+         new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")})});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, AcKdVSQQplusDeadcards) {
@@ -68,12 +79,15 @@ SUITE(ECalcTests) {
     cards board({(card)Card("Jh").card(), (card)Card("Qs").card(),
                  (card)Card("Kc").card()});
 
-    Handlist *opp_range =
-        new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")});
-    Handlist::collection_t hands({new SingleHandlist(Hand("AcKd")), opp_range});
+    Handlist::collection_t hands(
+        {new SingleHandlist(Hand("AcKd")),
+         new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")})});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
     CHECK_CLOSE(0.13202, res[0].pwin_tie(), 0.02);
     CHECK_CLOSE(0.86798, res[1].pwin_tie(), 0.02);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, AcKdVS2QQplusDeadcards) {
@@ -82,15 +96,17 @@ SUITE(ECalcTests) {
     cards board({(card)Card("Jh").card(), (card)Card("Qs").card(),
                  (card)Card("Kc").card()});
 
-    Handlist *opp_range =
-        new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")});
-
     Handlist::collection_t hands(
-        {new SingleHandlist(Hand("AcKd")), opp_range, opp_range});
+        {new SingleHandlist(Hand("AcKd")),
+         new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")}),
+         new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")})});
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
     CHECK_CLOSE(0.08333, res[0].pwin_tie(), 0.02);
     CHECK_CLOSE(0.45833, res[1].pwin_tie(), 0.02);
     CHECK_CLOSE(0.45833, res[2].pwin_tie(), 0.02);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   /**
@@ -111,5 +127,8 @@ SUITE(ECalcTests) {
     catch (std::runtime_error e) {
       CHECK(true);
     }
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 }

@@ -9,7 +9,7 @@ class ArrayHandlist : public Handlist {
 public:
   explicit ArrayHandlist(const vector<poker::Hand> &hands_)
       : nb_hands(hands_.size()), hands(hands_.size()) {
-    for (unsigned i = 0; i < nb_hands; ++i) {
+    for (int i = 0; i < nb_hands; ++i) {
       hands[i] = create_hand(hands_[i]);
     }
   }
@@ -17,7 +17,7 @@ public:
   explicit ArrayHandlist(const vector<combination> &hands_)
       : nb_hands(hands_.size()), hands(hands_) {}
 
-  virtual combination get_hand(xorshift_generator &nb_gen, bitset &deck) {
+  virtual combination get_hand(XOrShiftGenerator &nb_gen, bitset &deck) {
     card c0, c1;
     combination hand;
     int counter = GET_HAND_TRY_MAX;

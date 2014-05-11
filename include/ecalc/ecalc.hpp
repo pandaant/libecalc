@@ -16,14 +16,14 @@ using poker::Hand;
 using std::vector;
 
 // ----------------------------------------------------------------------
-/// @brief   This class allows to calculate the equity of a hand or 
+/// @brief   This class allows to calculate the equity of a hand or
 ///          range of Hands against other handranges. The result is a
 ///          struct containing the 3 calculated percentages ( pwin/ptie
-//           /plos ) for each range.
+///          /plos ) for each range.
 // ----------------------------------------------------------------------
 class ECalc {
   Handranks &HR;
-  xorshift_generator nb_gen;
+  XOrShiftGenerator nb_gen;
 
 public:
   // ----------------------------------------------------------------------
@@ -34,9 +34,10 @@ public:
   // ----------------------------------------------------------------------
   ECalc(Handranks &hr, const uint32_t &seed = 0);
 
-result_collection evaluate(const Handlist::collection_t &handlists,
+  result_collection evaluate(const Handlist::collection_t &handlists,
                              const cards &boardcards, const cards &deadcards,
                              const int &samples);
+
   result_collection evaluate_vs_random(Handlist *_handlist,
                                        size_t nb_random_player,
                                        const cards &boardcards,
@@ -54,7 +55,7 @@ private:
                              const int &samples);
 
   // ----------------------------------------------------------------------
-  /// @brief   draws a card from a deck of cards. The card returned is 
+  /// @brief   draws a card from a deck of cards. The card returned is
   ///          removed from the deck.
   ///
   /// @param deck to pick card from

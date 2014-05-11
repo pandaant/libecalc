@@ -44,17 +44,23 @@ SUITE(ECalcBenchmarks) {
     CHECK_CLOSE(0.82637, res[0].pwin_tie(), 0.01);
     CHECK_CLOSE(0.17363, res[1].pwin_tie(), 0.01);
     print_benchmark_result("AhAs v. KhKs", (end - start), NB_SAMPLES);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, BenchmarkAhAsVsRandom) {
     cards board, dead;
 
+    Handlist* hand = new SingleHandlist(Hand("AhAs"));
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate_vs_random(
-        new SingleHandlist(Hand("AhAs")), 1, board, dead, NB_SAMPLES);
+        hand, 1, board, dead, NB_SAMPLES);
     auto end = std::chrono::system_clock::now();
 
     print_benchmark_result("AhAs v. Random", (end - start), NB_SAMPLES);
+
+    delete hand;
   }
 
   TEST_FIXTURE(Setup, BenchmarkRandomVsRandom) {
@@ -69,6 +75,9 @@ SUITE(ECalcBenchmarks) {
     print_benchmark_result("2 x Random", (end - start), NB_SAMPLES);
     CHECK_CLOSE(0.5, res[0].pwin_tie(), 0.01);
     CHECK_CLOSE(0.5, res[1].pwin_tie(), 0.01);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, BenchmarkRandomVsRandomVsRandom) {
@@ -84,16 +93,17 @@ SUITE(ECalcBenchmarks) {
     CHECK_CLOSE(0.33, res[0].pwin_tie(), 0.01);
     CHECK_CLOSE(0.33, res[1].pwin_tie(), 0.01);
     CHECK_CLOSE(0.33, res[2].pwin_tie(), 0.01);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, Benchmark4Random) {
-    Handlist::collection_t hands({new RandomHandlist(0), new RandomHandlist(0),
-                                  new RandomHandlist(0),
-                                  new RandomHandlist(0)});
     cards board, dead;
 
+    Handlist* random = new RandomHandlist();
     auto start = std::chrono::system_clock::now();
-    result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
+    result_collection res = calc.evaluate_vs_random(random, 3, board, dead, NB_SAMPLES);
     auto end = std::chrono::system_clock::now();
 
     print_benchmark_result("4 x Random", (end - start), NB_SAMPLES);
@@ -101,6 +111,8 @@ SUITE(ECalcBenchmarks) {
     CHECK_CLOSE(0.25, res[1].pwin_tie(), 0.01);
     CHECK_CLOSE(0.25, res[2].pwin_tie(), 0.01);
     CHECK_CLOSE(0.25, res[3].pwin_tie(), 0.01);
+
+    delete random;
   }
 
   TEST_FIXTURE(Setup, Benchmark5Random) {
@@ -119,6 +131,9 @@ SUITE(ECalcBenchmarks) {
     CHECK_CLOSE(0.20, res[2].pwin_tie(), 0.01);
     CHECK_CLOSE(0.20, res[3].pwin_tie(), 0.01);
     CHECK_CLOSE(0.20, res[4].pwin_tie(), 0.01);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 
   TEST_FIXTURE(Setup, Benchmark6Random) {
@@ -138,6 +153,9 @@ SUITE(ECalcBenchmarks) {
     CHECK_CLOSE(0.166, res[3].pwin_tie(), 0.01);
     CHECK_CLOSE(0.166, res[4].pwin_tie(), 0.01);
     CHECK_CLOSE(0.166, res[5].pwin_tie(), 0.01);
+
+    for( unsigned i = 0; i < hands.size(); ++i)
+        delete hands[i];
   }
 }
 
