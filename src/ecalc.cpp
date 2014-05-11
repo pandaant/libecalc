@@ -1,4 +1,5 @@
 #include "ecalc.hpp"
+#include "random_handlist.hpp"
 #include <algorithm>
 
 namespace ecalc {
@@ -7,8 +8,8 @@ const double ECalc::DLUT[] = {0,                   1,                   0.5,
                               0.16666666666666666, 0.14285714285714285, 0.125,
                               0.11111111111111111, 0.1};
 
-ECalc::ECalc(Handranks &hr, const uint32_t seed) : HR(hr), nb_gen(seed) {}
-result_collection ECalc::evaluate(const handlist_collection &handlists,
+ECalc::ECalc(Handranks &hr, const uint32_t &seed) : HR(hr), nb_gen(seed) {}
+result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const cards &boardcards,
                                   const cards &deadcards, const int &samples) {
   bitset deck = create_deck(boardcards, deadcards);
@@ -16,19 +17,19 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
   return evaluate(handlists, board, deck, samples);
 }
 
-result_collection ECalc::evaluate_vs_random(const handlist &_handlist,
+result_collection ECalc::evaluate_vs_random(Handlist* _handlist,
                                             size_t nb_random_player,
                                             const cards &boardcards,
                                             const cards &deadcards,
                                             const int &samples) {
   bitset dead = create_bitset(boardcards) | create_bitset(deadcards);
-  handlist random_list = ECalc::random_handlist(dead);
-  handlist_collection lists(nb_random_player + 1, random_list);
+  Handlist* random_list = new RandomHandlist(dead);
+  Handlist::collection_t lists(nb_random_player + 1, random_list);
   lists[0] = _handlist;
   return evaluate(lists, boardcards, deadcards, samples);
 }
 
-result_collection ECalc::evaluate(const handlist_collection &handlists,
+result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const combination &boardcards,
                                   const bitset &deck, const int &samples) {
   size_t nb_handlists = handlists.size();
@@ -49,7 +50,7 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
     sim_board = boardcards;
 
     for (p = 0; p < nb_handlists; ++p)
-      sim_hands[p] = get_hand(handlists[p], sim_deck);
+      sim_hands[p] = handlists[p]->get_hand(nb_gen, sim_deck);
 
     draw(sim_board, sim_deck);
 
@@ -77,35 +78,10 @@ result_collection ECalc::evaluate(const handlist_collection &handlists,
   return results;
 }
 
-handlist ECalc::random_handlist(const bitset &deadcards) {
-  int c0, c1;
-  handlist hands;
-  for (c0 = 1; c0 < 52; ++c0) {
-    for (c1 = c0 + 1; c1 < 53; ++c1) {
-      if (!(BIT_GET(deadcards, c0) || BIT_GET(deadcards, c1)))
-        hands.push_back(CREATE_HAND(c0, c1));
-    }
-  }
-  return hands;
-}
-
-handlist ECalc::array_handlist(const vector<Hand> &hands) {
-  handlist list(hands.size());
-  for (size_t i = 0; i < hands.size(); ++i) {
-    list[i] = CREATE_HAND(hands[i].get_highcard().get_card(),
-                          hands[i].get_lowcard().get_card());
-  }
-  return list;
-}
-
-handlist ECalc::single_handlist(const Hand &hand) {
-  return handlist({create_hand(hand)});
-}
-
 card ECalc::draw_card(bitset &deck) {
   card rand;
   while (true) {
-    rand = get_rand(52);
+    rand = nb_gen(52);
     if (BIT_GET(deck, rand)) {
       deck = BIT_CLR(deck, rand);
       return rand;
@@ -124,11 +100,6 @@ void ECalc::draw(combination &board, bitset &deck) {
     board = SET_C5(board, draw_card(deck));
   if (GET_C6(board) == CARD_F)
     board = SET_C6(board, draw_card(deck));
-}
-
-unsigned ECalc::get_rand(const uint32_t max) {
-  return static_cast<unsigned>(
-      static_cast<double>(nb_gen()) / nb_gen.MAX * max + 1);
 }
 
 combination ECalc::create_board(const cards &_cards) const {
@@ -156,18 +127,13 @@ bitset ECalc::create_deck(const cards &board, const cards &dead) {
   return deck;
 }
 
-combination ECalc::create_hand(const Hand &hand) {
-  return CREATE_HAND(hand.get_lowcard().get_card(),
-                     hand.get_highcard().get_card());
-}
-
 combination ECalc::get_hand(const handlist &handlist, bitset &deck) {
   card c0, c1;
   combination hand;
   int counter = GET_HAND_TRY_MAX;
   uint32_t nb_handlists = static_cast<uint32_t>(handlist.size());
   while (counter-- != 0) {
-    hand = handlist[static_cast<size_t>(get_rand(nb_handlists) - 1)];
+    hand = handlist[static_cast<size_t>(nb_gen(nb_handlists) - 1)];
     c0 = GET_C0(hand);
     c1 = GET_C1(hand);
     if (BIT_GET(deck, c0) && BIT_GET(deck, c1)) {

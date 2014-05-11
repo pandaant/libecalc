@@ -4,6 +4,8 @@
 #include <iostream>
 #include <UnitTest++.h>
 #include <ecalc.hpp>
+#include <single_handlist.hpp>
+#include <random_handlist.hpp>
 
 #define NB_SAMPLES 10000
 
@@ -12,7 +14,7 @@ SUITE(ECalcBenchmarks) {
   using std::vector;
   using namespace std::chrono;
   using namespace ecalc;
-  using namespace Poker;
+  using namespace poker;
 
   struct Setup {
     ECalc calc;
@@ -32,8 +34,8 @@ SUITE(ECalcBenchmarks) {
 
   TEST_FIXTURE(Setup, BenchmarkAhAsVsKhKs) {
     cards board, dead;
-    handlist_collection hands({ECalc::single_handlist(Hand("AhAs")),
-                               ECalc::single_handlist(Hand("KhKs"))});
+    Handlist::collection_t hands(
+        {new SingleHandlist(Hand("AhAs")), new SingleHandlist(Hand("KhKs"))});
 
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
@@ -49,7 +51,7 @@ SUITE(ECalcBenchmarks) {
 
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate_vs_random(
-        ECalc::single_handlist(Hand("AhAs")), 1, board, dead, NB_SAMPLES);
+        new SingleHandlist(Hand("AhAs")), 1, board, dead, NB_SAMPLES);
     auto end = std::chrono::system_clock::now();
 
     print_benchmark_result("AhAs v. Random", (end - start), NB_SAMPLES);
@@ -57,8 +59,8 @@ SUITE(ECalcBenchmarks) {
 
   TEST_FIXTURE(Setup, BenchmarkRandomVsRandom) {
     cards board, dead;
-    handlist_collection hands(
-        {ECalc::random_handlist(0), ECalc::random_handlist(0)});
+    Handlist::collection_t hands(
+        {new RandomHandlist(0), new RandomHandlist(0)});
 
     auto start = std::chrono::system_clock::now();
     result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
@@ -70,9 +72,8 @@ SUITE(ECalcBenchmarks) {
   }
 
   TEST_FIXTURE(Setup, BenchmarkRandomVsRandomVsRandom) {
-    handlist_collection hands({ECalc::random_handlist(0),
-                               ECalc::random_handlist(0),
-                               ECalc::random_handlist(0)});
+    Handlist::collection_t hands(
+        {new RandomHandlist(0), new RandomHandlist(0), new RandomHandlist(0)});
     cards board, dead;
 
     auto start = std::chrono::system_clock::now();
@@ -86,9 +87,9 @@ SUITE(ECalcBenchmarks) {
   }
 
   TEST_FIXTURE(Setup, Benchmark4Random) {
-    handlist_collection hands(
-        {ECalc::random_handlist(0), ECalc::random_handlist(0),
-         ECalc::random_handlist(0), ECalc::random_handlist(0)});
+    Handlist::collection_t hands({new RandomHandlist(0), new RandomHandlist(0),
+                                  new RandomHandlist(0),
+                                  new RandomHandlist(0)});
     cards board, dead;
 
     auto start = std::chrono::system_clock::now();
@@ -103,10 +104,9 @@ SUITE(ECalcBenchmarks) {
   }
 
   TEST_FIXTURE(Setup, Benchmark5Random) {
-    handlist_collection hands(
-        {ECalc::random_handlist(0), ECalc::random_handlist(0),
-         ECalc::random_handlist(0), ECalc::random_handlist(0),
-         ECalc::random_handlist(0)});
+    Handlist::collection_t hands({new RandomHandlist(0), new RandomHandlist(0),
+                                  new RandomHandlist(0), new RandomHandlist(0),
+                                  new RandomHandlist(0)});
     cards board, dead;
 
     auto start = std::chrono::system_clock::now();
@@ -122,10 +122,9 @@ SUITE(ECalcBenchmarks) {
   }
 
   TEST_FIXTURE(Setup, Benchmark6Random) {
-    handlist_collection hands(
-        {ECalc::random_handlist(0), ECalc::random_handlist(0),
-         ECalc::random_handlist(0), ECalc::random_handlist(0),
-         ECalc::random_handlist(0), ECalc::random_handlist(0)});
+    Handlist::collection_t hands(
+        {new RandomHandlist(0), new RandomHandlist(0), new RandomHandlist(0),
+         new RandomHandlist(0), new RandomHandlist(0), new RandomHandlist(0)});
     cards board, dead;
 
     auto start = std::chrono::system_clock::now();

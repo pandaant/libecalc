@@ -27,6 +27,11 @@ public:
     return w;
   }
 
+  uint32_t operator()(const uint32_t &max) {
+    return static_cast<unsigned>(
+        static_cast<double>(xorshift_generator::operator()()) / MAX * max + 1);
+  }
+
   void seed(uint32_t seed) {
     x = seed;
     y = seed + 651688;

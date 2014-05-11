@@ -2,10 +2,32 @@
 #define ECALC_RESULT_H
 
 namespace ecalc {
+
+// ----------------------------------------------------------------------
+/// @brief   stores the equities for one range in the evaluation process.
+// ----------------------------------------------------------------------
 struct result {
+
+  // ----------------------------------------------------------------------
+  /// @brief   sum of all simulations played
+  // ----------------------------------------------------------------------
   int nb_samples;
+
+  // ----------------------------------------------------------------------
+  /// @brief   number of times range won a simulation
+  // ----------------------------------------------------------------------
   double win;
+
+  // ----------------------------------------------------------------------
+  /// @brief   number of times range tied with one or more ranges.
+  ///          When a outcome is tied every winning player gets 1/N points
+  ///          added to his tievalue where N is number of tieplayers.
+  // ----------------------------------------------------------------------
   double tie;
+
+  // ----------------------------------------------------------------------
+  /// @brief   number of times handlist lost a simulation.
+  // ----------------------------------------------------------------------
   double los;
 
   result(int _nb_samples) : nb_samples(_nb_samples), win(0), tie(0), los(0) {}

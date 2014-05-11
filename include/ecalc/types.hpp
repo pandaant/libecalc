@@ -11,7 +11,6 @@ typedef uint64_t combination;
 typedef std::vector<card> cards;
 typedef std::vector<combination> handlist;
 typedef std::vector<result> result_collection;
-typedef std::vector<handlist> handlist_collection;
 }
 
 #endif
