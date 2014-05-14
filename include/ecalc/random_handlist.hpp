@@ -5,8 +5,17 @@
 
 namespace ecalc {
 
+// ----------------------------------------------------------------------
+/// @brief   pick evenly distributed random hands
+// ----------------------------------------------------------------------
 class RandomHandlist : public ArrayHandlist {
 public:
+  // ----------------------------------------------------------------------
+  /// @brief   constructs a new object using a bitmask as deadcards.
+  ///          is used internally.
+  ///
+  /// @param deadcards
+  // ----------------------------------------------------------------------
   explicit RandomHandlist(const bitset &deadcards = 0)
       : ArrayHandlist(create_hands(deadcards)) {}
 

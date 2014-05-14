@@ -22,13 +22,33 @@ public:
   ///
   /// @param seed_ to initialize the random generator
   // ----------------------------------------------------------------------
-  explicit XOrShiftGenerator(uint32_t seed_ = 0) {
-    x = 123456789;
-    y = 362436069;
-    z = 521288629;
-    w = 88675123;
-    seed(seed_);
-  }
+  explicit XOrShiftGenerator(uint32_t seed_ = 0);
+
+  // ----------------------------------------------------------------------
+  /// @brief   copies the current generator inclusive state, if you want
+  ///          to use 2 instances at the same time you have to manually
+  ///          reseed one of the instances so they generate different
+  ///          numbers.
+  ///
+  /// @param og a number generator
+  // ----------------------------------------------------------------------
+  XOrShiftGenerator(const XOrShiftGenerator &og);
+
+  // ----------------------------------------------------------------------
+  /// @brief   same as copy constructor
+  ///
+  /// @param og a number generator
+  ///
+  /// @return a copy of number gen instance
+  // ----------------------------------------------------------------------
+  XOrShiftGenerator& operator=(const XOrShiftGenerator &og);
+
+  // ----------------------------------------------------------------------
+  /// @brief   (re)seeds the generator
+  ///
+  /// @param seed a seed
+  // ----------------------------------------------------------------------
+  void seed(uint32_t seed);
 
   // ----------------------------------------------------------------------
   /// @brief get a random number 
@@ -54,13 +74,6 @@ public:
   uint32_t operator()(const uint32_t &max) {
     return static_cast<unsigned>(
         static_cast<double>(XOrShiftGenerator::operator()()) / MAX * max + 1);
-  }
-
-  void seed(uint32_t seed) {
-    x = seed;
-    y = seed + 651688;
-    z = seed + 146819;
-    w = seed + 84167;
   }
 
   uint32_t max() const { return MAX; }

@@ -10,6 +10,13 @@ namespace ecalc {
 // ----------------------------------------------------------------------
 class SingleHandlist : public Handlist {
 public:
+
+    // ----------------------------------------------------------------------
+    /// @brief   constructs a new object from a poker hand. hand is converted
+    ///          into internal representation
+    ///
+    /// @param hand to create list from
+    // ----------------------------------------------------------------------
   explicit SingleHandlist(const poker::Hand &hand)
       : hand(Handlist::create_hand(hand)) {}
 

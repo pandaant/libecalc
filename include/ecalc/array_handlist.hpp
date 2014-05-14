@@ -5,8 +5,18 @@
 
 namespace ecalc {
 
+// ----------------------------------------------------------------------
+/// @brief   used for a collection of hands from which is
+///          randomly drawn.
+// ----------------------------------------------------------------------
 class ArrayHandlist : public Handlist {
 public:
+  // ----------------------------------------------------------------------
+  /// @brief   constructs a new object from a list of hands. every hand
+  ///          is converted to a internal representation.
+  ///
+  /// @param hands_ hands to draw randomly from
+  // ----------------------------------------------------------------------
   explicit ArrayHandlist(const vector<poker::Hand> &hands_)
       : nb_hands(hands_.size()), hands(hands_.size()) {
     for (int i = 0; i < nb_hands; ++i) {
@@ -14,8 +24,23 @@ public:
     }
   }
 
+  // ----------------------------------------------------------------------
+  /// @brief   constructs a new object from a list of hands in internal
+  ///          representation. Does not do any conversions
+  ///
+  /// @param hands_
+  // ----------------------------------------------------------------------
   explicit ArrayHandlist(const vector<combination> &hands_)
       : nb_hands(hands_.size()), hands(hands_) {}
+
+  ArrayHandlist(const ArrayHandlist &oah)
+      : nb_hands(oah.nb_hands), hands(oah.hands) {}
+
+  ArrayHandlist &operator=(const ArrayHandlist &oah) {
+    nb_hands = oah.nb_hands;
+    hands = oah.hands;
+    return *this;
+  }
 
   virtual combination get_hand(XOrShiftGenerator &nb_gen, bitset &deck) {
     card c0, c1;

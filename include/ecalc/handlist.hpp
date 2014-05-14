@@ -12,6 +12,7 @@ namespace ecalc {
 // ----------------------------------------------------------------------
 class Handlist {
 public:
+    /// to store a list of handlists.
   typedef std::vector<Handlist*> collection_t;
 
   virtual ~Handlist() {}
