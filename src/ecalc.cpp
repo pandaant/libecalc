@@ -8,7 +8,8 @@ const double ECalc::DLUT[] = {0,                   1,                   0.5,
                               0.16666666666666666, 0.14285714285714285, 0.125,
                               0.11111111111111111, 0.1};
 
-ECalc::ECalc(Handranks &hr, const uint32_t &seed) : HR(hr), nb_gen(seed) {}
+ECalc::ECalc(Handranks *hr, const uint32_t &seed) : HR(*hr), nb_gen(seed) {}
+
 result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const cards &boardcards,
                                   const cards &deadcards, const int &samples) {

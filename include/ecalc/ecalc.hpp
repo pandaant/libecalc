@@ -32,7 +32,15 @@ public:
   /// @param hr A Lookuptable containing handstrengths
   /// @param seed A seed to initialize the random generator
   // ----------------------------------------------------------------------
-  ECalc(Handranks &hr, const uint32_t &seed = 0);
+  ECalc(Handranks* hr, const uint32_t &seed = 0);
+
+  ECalc(const ECalc &oe): HR(oe.HR), nb_gen(oe.nb_gen){}
+
+  //ECalc& operator=(const ECalc &oe){
+    //&HR = oe.HR;
+    //nb_gen = nb_gen;
+    //return *this;
+  //}
 
   // ----------------------------------------------------------------------
   /// @brief   calculates equity for at least 2 handslists 

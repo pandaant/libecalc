@@ -17,7 +17,7 @@ SUITE(ECalcTests) {
   struct Setup {
     ECalc calc;
 
-    Setup() : calc(*(new Handranks("../../../bin/data/handranks.dat"))) {}
+    Setup() : calc(Handranks::construct("../../../bin/data/handranks.dat")) {}
     ~Setup() {}
   };
 
