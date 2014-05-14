@@ -22,7 +22,7 @@ using std::vector;
 ///          /plos ) for each range.
 // ----------------------------------------------------------------------
 class ECalc {
-  Handranks &HR;
+  Handranks *HR;
   XOrShiftGenerator nb_gen;
 
 public:
@@ -34,13 +34,25 @@ public:
   // ----------------------------------------------------------------------
   ECalc(Handranks* hr, const uint32_t &seed = 0);
 
-  ECalc(const ECalc &oe): HR(oe.HR), nb_gen(oe.nb_gen){}
+  // ----------------------------------------------------------------------
+  /// @brief   copy construcs an ecalc obj. The address of the handranks
+  ///          table is simply copied. The number generators constructor
+  ///          get ivoked. This means after copying the ecalc and using
+  ///          both instances at the same time one of them has to be
+  ///          manually reseeded.
+  ///
+  /// @param oe other ecalc instance
+  // ----------------------------------------------------------------------
+  ECalc(const ECalc &oe);
 
-  //ECalc& operator=(const ECalc &oe){
-    //&HR = oe.HR;
-    //nb_gen = nb_gen;
-    //return *this;
-  //}
+  // ----------------------------------------------------------------------
+  /// @brief   same as copyconstructor
+  ///
+  /// @param oe same as copyconstructor
+  ///
+  /// @return ecalc instance
+  // ----------------------------------------------------------------------
+  ECalc& operator=(const ECalc &oe);
 
   // ----------------------------------------------------------------------
   /// @brief   calculates equity for at least 2 handslists 

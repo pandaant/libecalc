@@ -8,7 +8,15 @@ const double ECalc::DLUT[] = {0,                   1,                   0.5,
                               0.16666666666666666, 0.14285714285714285, 0.125,
                               0.11111111111111111, 0.1};
 
-ECalc::ECalc(Handranks *hr, const uint32_t &seed) : HR(*hr), nb_gen(seed) {}
+ECalc::ECalc(Handranks *hr, const uint32_t &seed) : HR(hr), nb_gen(seed) {}
+
+ECalc::ECalc(const ECalc &oe) : HR(oe.HR), nb_gen(oe.nb_gen) {}
+
+ECalc &ECalc::operator=(const ECalc &oe) {
+  HR = oe.HR;
+  nb_gen = nb_gen;
+  return *this;
+}
 
 result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const cards &boardcards,
@@ -18,7 +26,7 @@ result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
   return evaluate(handlists, board, deck, samples);
 }
 
-result_collection ECalc::evaluate_vs_random(Handlist* handlist,
+result_collection ECalc::evaluate_vs_random(Handlist *handlist,
                                             size_t nb_random_player,
                                             const cards &boardcards,
                                             const cards &deadcards,
@@ -129,5 +137,4 @@ bitset ECalc::create_deck(const cards &board, const cards &dead) {
     deck = BIT_CLR(deck, c);
   return deck;
 }
-
 }

@@ -14,11 +14,10 @@ SUITE(ECalcTests) {
   using namespace ecalc;
   using namespace poker;
 
-  struct Setup {
-    ECalc calc;
+    Handranks handranks("../../../bin/data/handranks.dat");
+    ECalc calc(&handranks, 0);
 
-    Setup() : calc(Handranks::construct("../../../bin/data/handranks.dat")) {}
-    ~Setup() {}
+  struct Setup {
   };
 
   TEST_FIXTURE(Setup, EvaluateRandom) {

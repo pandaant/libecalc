@@ -55,10 +55,11 @@
 #define CREATE_HAND(c0, c1) SET_C1(SET_C0(static_cast<combination>(0), c0), c1)
 
 #define LOOKUP_HAND(HR, c)                                                     \
-  HR[HR[HR[HR[HR[HR[HR[53 + GET_C0(c)] + GET_C1(c)] + GET_C2(c)] +             \
-              GET_C3(c)] +                                                     \
-           GET_C4(c)] +                                                        \
-        GET_C5(c)] +                                                           \
-     GET_C6(c)];
+  (*HR)[(*HR)[(*HR)[(*HR)[(*HR)[(*HR)[(*HR)[53 + GET_C0(c)] + GET_C1(c)] +     \
+                                GET_C2(c)] +                                   \
+                          GET_C3(c)] +                                         \
+                    GET_C4(c)] +                                               \
+              GET_C5(c)] +                                                     \
+        GET_C6(c)];
 
 #endif
