@@ -22,7 +22,7 @@ public:
   ///
   /// @param seed_ to initialize the random generator
   // ----------------------------------------------------------------------
-  explicit XOrShiftGenerator(uint32_t seed_ = 0);
+  explicit XOrShiftGenerator(const uint32_t &seed_ = 0);
 
   // ----------------------------------------------------------------------
   /// @brief   copies the current generator inclusive state, if you want
@@ -41,17 +41,17 @@ public:
   ///
   /// @return a copy of number gen instance
   // ----------------------------------------------------------------------
-  XOrShiftGenerator& operator=(const XOrShiftGenerator &og);
+  XOrShiftGenerator &operator=(const XOrShiftGenerator &og);
 
   // ----------------------------------------------------------------------
   /// @brief   (re)seeds the generator
   ///
   /// @param seed a seed
   // ----------------------------------------------------------------------
-  void seed(uint32_t seed);
+  void seed(const uint32_t &seed);
 
   // ----------------------------------------------------------------------
-  /// @brief get a random number 
+  /// @brief get a random number
   ///
   /// @return a random number beween MIN and MAX
   // ----------------------------------------------------------------------

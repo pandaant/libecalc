@@ -7,13 +7,13 @@
 namespace ecalc {
 
 // ----------------------------------------------------------------------
-/// @brief   interface for a handlist that can be used in simulations. 
+/// @brief   interface for a handlist that can be used in simulations.
 ///          class must be overloaded with own implementation.
 // ----------------------------------------------------------------------
 class Handlist {
 public:
-    /// to store a list of handlists.
-  typedef std::vector<Handlist*> collection_t;
+  /// to store a list of handlists.
+  typedef std::vector<Handlist *> collection_t;
 
   virtual ~Handlist() {}
 
@@ -29,7 +29,7 @@ public:
   virtual combination get_hand(XOrShiftGenerator &nb_gen, bitset &deck) = 0;
 
   // ----------------------------------------------------------------------
-  /// @brief   converts a hand in the poker::Hand representation to an 
+  /// @brief   converts a hand in the poker::Hand representation to an
   ///          internal bitset representation.
   ///
   /// @param hand to convert

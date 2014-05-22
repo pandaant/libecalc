@@ -1,5 +1,5 @@
-#ifndef ECALC_DEFS_H
-#define ECALC_DEFS_H
+#ifndef ECALC_TYPES_H
+#define ECALC_TYPES_H
 
 #include <vector>
 #include <stdint.h>
