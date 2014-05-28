@@ -9,7 +9,7 @@ CXXFLAGS=-m64 -static -ansi -std=c++11 -MMD -MP
 # targets depend on.
 LIBRARIES =
 
-DOC_OUT = doc/*
+DOC_OUT = doc
 
 ifeq ($(target),debug)
     CXXFLAGS +=-O0 -Weverything -Wno-c++98-compat #-Werror
@@ -34,6 +34,7 @@ obj/$(target)/%.o: src/%.cpp
 all: $(LIB_OUT)
 
 doc:
+	mkdir -p $(DOC_OUT)
 	doxygen doxyfile
 
 clean:
