@@ -1,6 +1,7 @@
 #ifndef SINGLE_HANDLIST_H
 #define SINGLE_HANDLIST_H
 
+#include <poker/hand.hpp>
 #include "handlist.hpp"
 
 namespace ecalc {
@@ -10,13 +11,12 @@ namespace ecalc {
 // ----------------------------------------------------------------------
 class SingleHandlist : public Handlist {
 public:
-
-    // ----------------------------------------------------------------------
-    /// @brief   constructs a new object from a poker hand. hand is converted
-    ///          into internal representation
-    ///
-    /// @param hand to create list from
-    // ----------------------------------------------------------------------
+  // ----------------------------------------------------------------------
+  /// @brief   constructs a new object from a poker hand. hand is converted
+  ///          into internal representation
+  ///
+  /// @param hand to create list from
+  // ----------------------------------------------------------------------
   explicit SingleHandlist(const poker::Hand &hand)
       : hand(Handlist::create_hand(hand)) {}
 
@@ -30,6 +30,10 @@ public:
       return hand;
     }
     throw std::runtime_error("Hand not assignable.");
+  }
+
+  void set_hand(const poker::Hand &hand_) {
+    hand = Handlist::create_hand(hand_);
   }
 
 private:

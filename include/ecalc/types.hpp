@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <stdint.h>
+#include "result.hpp"
 
 namespace ecalc {
 typedef unsigned int card;

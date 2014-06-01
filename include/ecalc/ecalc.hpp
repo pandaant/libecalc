@@ -1,8 +1,6 @@
 #ifndef ECALC_H
 #define ECALC_H
 
-#define GET_HAND_TRY_MAX 20
-
 #include <poker/hand.hpp>
 #include "result.hpp"
 #include "types.hpp"

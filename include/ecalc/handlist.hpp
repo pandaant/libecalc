@@ -1,7 +1,9 @@
 #ifndef HANDLIST_H
 #define HANDLIST_H
 
+#include <poker/hand.hpp>
 #include "types.hpp"
+#include "macros.hpp"
 #include "xorshift_generator.hpp"
 
 namespace ecalc {

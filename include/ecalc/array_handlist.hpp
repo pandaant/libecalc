@@ -5,6 +5,10 @@
 
 namespace ecalc {
 
+#define GET_HAND_TRY_MAX 20
+
+using std::vector;
+
 // ----------------------------------------------------------------------
 /// @brief   used for a collection of hands from which is
 ///          randomly drawn.
