@@ -30,7 +30,7 @@ public:
   /// @param hr A Lookuptable containing handstrengths
   /// @param seed A seed to initialize the random generator
   // ----------------------------------------------------------------------
-  ECalc(Handranks* hr, const uint32_t &seed = 0);
+  ECalc(Handranks* hr, uint32_t seed = 0);
 
   // ----------------------------------------------------------------------
   /// @brief   copy construcs an ecalc obj. The address of the handranks
@@ -64,7 +64,7 @@ public:
   // ----------------------------------------------------------------------
   result_collection evaluate(const Handlist::collection_t &handlists,
                              const cards &boardcards, const cards &deadcards,
-                             const int &samples);
+                             unsigned samples);
 
   // ----------------------------------------------------------------------
   /// @brief   calculates the equity of a handlist against at least 1
@@ -83,7 +83,7 @@ public:
                                        size_t nb_random_player,
                                        const cards &boardcards,
                                        const cards &deadcards,
-                                       const int &samples);
+                                       unsigned samples);
 
 private:
   /// lookuptable for divisions from 1/0 to 1/10
@@ -103,7 +103,7 @@ private:
   // ----------------------------------------------------------------------
   result_collection evaluate(const Handlist::collection_t &handlists,
                              const combination &boardcards, const bitset &deck,
-                             const int &samples);
+                             unsigned samples);
 
   // ----------------------------------------------------------------------
   /// @brief   draws a card from a deck of cards. The card returned is

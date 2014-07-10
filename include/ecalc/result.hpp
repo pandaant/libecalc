@@ -35,10 +35,10 @@ struct Result {
   ///
   /// @param nb_samples_ sum of samples simulated
   // ----------------------------------------------------------------------
-  explicit Result(const int &nb_samples_)
+  explicit Result(unsigned nb_samples_)
       : nb_samples(nb_samples_), win(0), tie(0), los(0) {}
-  Result(const int &nb_samples_, const double &win_, const double &tie_,
-         const double &los_)
+
+  Result(unsigned nb_samples_, double win_, double tie_, double los_)
       : nb_samples(nb_samples_), win(win_), tie(tie_), los(los_) {}
 
   // ----------------------------------------------------------------------

@@ -8,7 +8,7 @@ const double ECalc::DLUT[] = {0,                   1,                   0.5,
                               0.16666666666666666, 0.14285714285714285, 0.125,
                               0.11111111111111111, 0.1};
 
-ECalc::ECalc(Handranks *hr, const uint32_t &seed) : HR(hr), nb_gen(seed) {}
+ECalc::ECalc(Handranks *hr, uint32_t seed) : HR(hr), nb_gen(seed) {}
 
 ECalc::ECalc(const ECalc &oe) : HR(oe.HR), nb_gen(oe.nb_gen) {}
 
@@ -20,7 +20,7 @@ ECalc &ECalc::operator=(const ECalc &oe) {
 
 result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const cards &boardcards,
-                                  const cards &deadcards, const int &samples) {
+                                  const cards &deadcards, unsigned samples) {
   bitset deck = create_deck(boardcards, deadcards);
   combination board = create_board(boardcards);
   return evaluate(handlists, board, deck, samples);
@@ -30,7 +30,7 @@ result_collection ECalc::evaluate_vs_random(Handlist *handlist,
                                             size_t nb_random_player,
                                             const cards &boardcards,
                                             const cards &deadcards,
-                                            const int &samples) {
+                                            unsigned samples) {
   bitset dead = create_bitset(boardcards) | create_bitset(deadcards);
   Handlist *random_list = new RandomHandlist(dead);
   Handlist::collection_t lists(nb_random_player + 1, random_list);
@@ -42,7 +42,7 @@ result_collection ECalc::evaluate_vs_random(Handlist *handlist,
 
 result_collection ECalc::evaluate(const Handlist::collection_t &handlists,
                                   const combination &boardcards,
-                                  const bitset &deck, const int &samples) {
+                                  const bitset &deck, unsigned samples) {
   size_t nb_handlists = handlists.size();
   result_collection results(handlists.size(), Result(samples));
   std::vector<size_t> sim_winners;
