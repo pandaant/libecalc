@@ -14,7 +14,7 @@ ECalc::ECalc(const ECalc &oe) : HR(oe.HR), nb_gen(oe.nb_gen) {}
 
 ECalc &ECalc::operator=(const ECalc &oe) {
   HR = oe.HR;
-  nb_gen = nb_gen;
+  nb_gen = oe.nb_gen;
   return *this;
 }
 
