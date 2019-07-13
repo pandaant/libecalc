@@ -8,7 +8,7 @@ SUITE(HandranksTests) {
   using namespace ecalc;
 
   TEST(TestInit) {
-    Handranks hl("../../../bin/data/handranks.dat");
+    Handranks hl("../../../handranks.dat");
 
     // normal construction
     ECalc calc(&hl, 0);

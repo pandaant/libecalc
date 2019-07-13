@@ -16,7 +16,7 @@ SUITE(ECalcBenchmarks) {
   using namespace ecalc;
   using namespace poker;
 
-  Handranks handranks("../../../bin/data/handranks.dat");
+  Handranks handranks("../../../handranks.dat");
   ECalc calc(&handranks, 0);
 
   void print_benchmark_result(string name, system_clock::duration duration,
