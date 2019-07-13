@@ -1,0 +1,3 @@
+[submodule "dep/libpoker"]
+	path = dep/libpoker
+	url = https://github.com/pandaant/libpoker
