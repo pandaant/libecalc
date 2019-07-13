@@ -2,7 +2,7 @@
 CXX = clang++ -g
 
 # variables for libecalc
-INCLUDES=-I ./include/ecalc -I ../libpoker/include
+INCLUDES=-I ./include/ecalc -I ./dep/libpoker/include
 CXXFLAGS=-m64 -static -ansi -std=c++11 -MMD -MP 
 
 # add paths of libraries the
@@ -31,7 +31,11 @@ $(LIB_OUT): $(OBJ_FILES)
 obj/$(target)/%.o: src/%.cpp
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -c -o $@ $<
 
-all: $(LIB_OUT)
+prepare:
+	mkdir -p obj/{release,debug}
+	mkdir -p lib/{release,debug}
+
+all: prepare $(LIB_OUT)
 
 doc:
 	mkdir -p $(DOC_OUT)
