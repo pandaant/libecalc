@@ -53,7 +53,8 @@ result_collection res = calc.evaluate_vs_random(
     1, 			// number of random players to check against
     board, 		// the boardcards
     dead, 		// list of deadcards
-    NB_SAMPLES);// number of samples to use. the higher the better
+    NB_SAMPLES	// number of samples to use. the higher the better
+);
 
 // res stores the percentage of win,tie and loss in a vector for each hand
 cout << "pwin: " << res[0].pwin_tie() << endl; // 0.85204
@@ -85,7 +86,7 @@ cards board({(card)Card("Jh").card(), (card)Card("Qd").card(),
 
 Handlist::collection_t hands({
 	new SingleHandlist(Hand("AcKd")),
-    new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")})
+	new ArrayHandlist({Hand("AhAs"), Hand("KhKs"), Hand("QcQd")})
 });
 
 result_collection res = calc.evaluate(hands, board, dead, NB_SAMPLES);
