@@ -4,6 +4,12 @@ Libecalc lets you compare Poker Hands and Ranges.
 ## Requirements
 * UnitTest++ for tests (expects headers and lib to be in /usr/{lib,include})
 
+* Handranks.dat for fast lookups
+
+  * Download or generate yourself:
+
+    https://github.com/christophschmalhofer/poker/blob/master/XPokerEval/XPokerEval.TwoPlusTwo/HandRanks.dat
+
 ## Build
 ```bash
 $ git clone --recursive https://github.com/pandaant/libecalc
@@ -19,7 +25,7 @@ $ make all
 # build documentation (requires doxygen)
 $ make doc
 
-# if you want to run tests
+# build and run tests
 $ cd test 
 $ make all run
 ```
