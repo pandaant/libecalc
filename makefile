@@ -31,11 +31,14 @@ $(LIB_OUT): $(OBJ_FILES)
 obj/$(target)/%.o: src/%.cpp
 	$(CXX) $(INCLUDES) $(CXXFLAGS) -c -o $@ $<
 
+dep:
+	cd dep/libpoker && make all
+
 prepare:
 	mkdir -p obj/{release,debug}
 	mkdir -p lib/{release,debug}
 
-all: prepare $(LIB_OUT)
+all: prepare dep $(LIB_OUT)
 
 doc:
 	mkdir -p $(DOC_OUT)
@@ -46,7 +49,8 @@ clean:
 	rm -f $(DEP_FILES)
 	rm -f $(LIB_OUT)
 	rm -f -r $(DOC_OUT)
+	cd dep/libpoker && make clean
 
 -include $(DEP_FILES)
 
-.PHONY: clean all doc
+.PHONY: clean all doc dep

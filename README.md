@@ -14,12 +14,8 @@ Libecalc lets you compare Poker Hands and Ranges.
 ```bash
 $ git clone --recursive https://github.com/pandaant/libecalc
 
-# compile dependencies
-$ cd libecalc/dep/libpoker
-$ make all
-
 # compile lib
-$ cd ../../
+$ cd libecalc/dep/libpoker
 $ make all
 
 # build documentation (requires doxygen)
