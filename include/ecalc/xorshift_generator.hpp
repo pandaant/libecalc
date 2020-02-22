@@ -12,9 +12,9 @@ namespace ecalc {
 class XOrShiftGenerator {
 public:
   /// greatest value that can be returned
-  static const uint32_t MAX;
+  static constexpr uint32_t MAX = std::numeric_limits<uint32_t>::max();;
   /// smallest value that can be returned
-  static const uint32_t MIN;
+  static constexpr uint32_t MIN = std::numeric_limits<uint32_t>::min();;
 
   // ----------------------------------------------------------------------
   /// @brief   constructs a new generator object and seed the state with
@@ -76,9 +76,9 @@ public:
         static_cast<double>(XOrShiftGenerator::operator()()) / MAX * max + 1);
   }
 
-  uint32_t max() const { return MAX; }
+  static constexpr uint32_t max() { return MAX; }
 
-  uint32_t min() const { return MIN; }
+  static constexpr uint32_t min() { return MIN; }
 
 private:
   uint32_t x, y, z, w;
